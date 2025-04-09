@@ -1,1 +1,24 @@
 @import "tailwindcss";
+
+@theme {
+  --breakpoint-xs: 480px;
+  --breakpoint-3xl: 1920px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.01);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
