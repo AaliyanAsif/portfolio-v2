@@ -11,10 +11,8 @@ export default function TiltedCard({
   imageSrc,
   altText = "Tilted card image",
   captionText = "",
-  containerHeight = "300px",
-  containerWidth = "100%",
-  imageHeight = "300px",
-  imageWidth = "300px",
+  containerHeight = "300px", // Default can remain, but will be overridden by CSS if needed
+  containerWidth = "100%", // Already responsive by default
   scaleOnHover = 1.1,
   rotateAmplitude = 14,
   showMobileWarning = true,
@@ -76,24 +74,22 @@ export default function TiltedCard({
       ref={ref}
       className="relative w-full h-full [perspective:800px] flex flex-col items-center justify-center"
       style={{
-        height: containerHeight,
-        width: containerWidth,
+        width: containerWidth, // Keep this responsive
+        height: containerHeight, // Can be overridden with CSS
       }}
       onMouseMove={handleMouse}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       {showMobileWarning && (
-        <div className="absolute top-4 text-center text-sm block sm:hidden">
+        <div className="absolute block text-sm text-center top-4 sm:hidden">
           This effect is not optimized for mobile. Check on desktop.
         </div>
       )}
 
       <motion.div
-        className="relative [transform-style:preserve-3d]"
+        className="relative w-full h-full [transform-style:preserve-3d]" // Use full width/height of container
         style={{
-          width: imageWidth,
-          height: imageHeight,
           rotateX,
           rotateY,
           scale,
@@ -102,11 +98,7 @@ export default function TiltedCard({
         <motion.img
           src={imageSrc}
           alt={altText}
-          className="absolute top-0 left-0 object-cover rounded-[15px] will-change-transform [transform:translateZ(0)]"
-          style={{
-            width: imageWidth,
-            height: imageHeight,
-          }}
+          className="w-full h-full object-cover rounded-[15px] will-change-transform [transform:translateZ(0)]" // Make image responsive
         />
 
         {displayOverlayContent && overlayContent && (
