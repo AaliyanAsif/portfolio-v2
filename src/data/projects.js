@@ -1,18 +1,35 @@
 export const PROJECTS_DATA = [
+   {
+    title: "YADEA POS",
+    img: "/yadea.jpg",
+    body: "YADEA POS is a point-of-sale system tailored for bike showrooms. It enables users to handle sales (including installment plans), manage stock levels, and track expenses with custom filtering options.",
+  },
+   {
+    title: "RaveRunner - E-Commerce Web App",
+    img: "/Raverunner",
+    body: "Full-stack e-commerce platform for a Brackets client with Next.js, WooCommerce APIs, MongoDB, Stripe payments, Google Maps, and AWS services.",
+  },
+   {
+    title: "Car Dealership Inventory & Analytics Dashboard",
+    img: "/cardealer",
+    body: "A full-stack dealership system with secure auth, KPI analytics, date-based filtering, inventory workflows, and PDF reporting for daily operations.",
+  },
   {
     title: "BTMS",
     img: "/tms1.png",
     body: "Brackets Team Managment System is a role-based management system for handling attendance, payroll, leave requests, and taxes and much more efficiently.",
   },
-  {
-    title: "YADEA POS",
-    img: "/yadea.jpg",
-    body: "A sleek and modern mock landing page for a Nike shoe store, designed for a smooth and stylish user experience.",
-  },
+ 
   {
     title: "Nike Landing Page",
     img: "/nike-landing-page.png",
     body: "A sleek and modern mock landing page for a Nike shoe store, designed for a smooth and stylish user experience.",
+  },
+ 
+  {
+    title: "NexusFlow",
+    img: "/nexus",
+    body: "A modern SaaS operations platform with real-time dashboards, workflow automation, and responsive role-based interfaces built from production-grade components.",
   },
 ];
 
@@ -157,6 +174,137 @@ export const PROJECTS_CASE_STUDY_DATA = [
       {
         title: "Other",
         body: "Responsive design, Scroll animations",
+      },
+    ],
+  },
+  {
+    id: "raverunner---e-commerce-web-app",
+    title: "RaveRunner - E-Commerce Web App",
+    category: "E-Commerce Platform",
+    link: "https://raverunner.co",
+    img: "/Raverunner",
+    overview:
+      "I worked as the full-stack developer on RaveRunner, an e-commerce platform built for a client at Brackets. I developed the Next.js frontend, integrated WooCommerce APIs, MongoDB, Stripe payments, Google Maps API, and AWS services including Amplify, Lambda, SQS, and S3. I managed full development for 9 months and delivered a scalable, production-ready store.",
+    myRole:
+      "Full-Stack Developer - Owned frontend and backend integrations, cloud services setup, payment workflow implementation, and production delivery.",
+    keyFeatures: [
+      {
+        title: "Commerce Workflows",
+        body: "Built product, checkout, and order flows with WooCommerce API integrations.",
+      },
+      {
+        title: "Payment Integration",
+        body: "Integrated Stripe SDK for secure transactions and checkout handling.",
+      },
+      {
+        title: "Cloud-Ready Architecture",
+        body: "Used AWS Amplify, Lambda, S3, and SQS to support scalable operations and async processing.",
+      },
+      {
+        title: "Location & Utility APIs",
+        body: "Integrated Google APIs to support location-based and utility features.",
+      },
+    ],
+    challenges:
+      "Delivering a production-ready e-commerce system required balancing performance, payment reliability, and cloud integration complexity. I solved this by structuring integrations in modular layers, validating critical purchase flows, and optimizing deployment workflows for stable releases.",
+    technologies: [
+      {
+        title: "Frontend",
+        body: "Next.js",
+      },
+      {
+        title: "Backend & Data",
+        body: "WooCommerce, MongoDB",
+      },
+      {
+        title: "Cloud & Integrations",
+        body: "AWS Lambda, AWS Amplify, AWS S3, AWS SQS, Stripe SDK, Google APIs",
+      },
+    ],
+  },
+  {
+    id: "car-dealership-inventory-&-analytics-dashboard",
+    title: "Car Dealership Inventory & Analytics Dashboard",
+    category: "Business Management System",
+    link: "https://azan-cms.vercel.app",
+    img: "/cardealer",
+    overview:
+      "I built a full-stack car dealership management system using Next.js and MongoDB. It includes secure authentication, a dynamic analytics dashboard, profit/loss charts, KPIs, and advanced date-based filtering. Users can add, update, and sell cars, manage inventory, and generate PDF reports. The system also includes customizable theme settings, user profile management, and responsive UI for seamless daily dealership operations.",
+    myRole:
+      "Full-Stack Developer - Designed and implemented the complete system architecture, dashboard analytics, and inventory workflows.",
+    keyFeatures: [
+      {
+        title: "Inventory Lifecycle Management",
+        body: "Enabled create, update, sell, and status tracking workflows for dealership inventory.",
+      },
+      {
+        title: "Analytics & KPIs",
+        body: "Built actionable dashboards with profit/loss charts, KPIs, and date-based filtering.",
+      },
+      {
+        title: "Operational Reporting",
+        body: "Implemented PDF report generation for business visibility and record-keeping.",
+      },
+      {
+        title: "User Experience Controls",
+        body: "Added responsive UI, theme customization, and user profile management for everyday workflows.",
+      },
+    ],
+    challenges:
+      "The main challenge was keeping dashboard analytics accurate while supporting complex inventory state changes and date filters. I addressed this with consistent data modeling, carefully scoped calculations, and a responsive UI structure optimized for high-usage operations.",
+    technologies: [
+      {
+        title: "Frontend",
+        body: "Next.js, TypeScript, Tailwind CSS",
+      },
+      {
+        title: "Backend & Data",
+        body: "MongoDB",
+      },
+      {
+        title: "Other",
+        body: "Responsive Design",
+      },
+    ],
+  },
+  {
+    id: "nexusflow",
+    title: "NexusFlow - Operations Intelligence for Modern Teams",
+    category: "SaaS Platform",
+    link: "https://nexus-flow-omega.vercel.app/",
+    img: "/nexus",
+    overview:
+      "NexusFlow is a modern SaaS operations platform that centralizes real-time analytics, workflow automation, and team collaboration in one unified dashboard. I converted Figma designs into pixel-perfect, fully responsive UI and built scalable React components for live dashboards, automated workflows, and role-based access. The project demonstrates expertise in production-ready SaaS interfaces with clean architecture and high visual accuracy.",
+    myRole:
+      "Frontend-Focused Full-Stack Developer - Converted design systems into production interfaces and built scalable dashboard components.",
+    keyFeatures: [
+      {
+        title: "Unified Operations Dashboard",
+        body: "Centralized real-time analytics, collaboration modules, and workflow status views.",
+      },
+      {
+        title: "Workflow Automation UI",
+        body: "Built reusable components to configure and monitor automated operational flows.",
+      },
+      {
+        title: "Role-Based Interfaces",
+        body: "Implemented role-aware UI states for teams with different permissions and responsibilities.",
+      },
+      {
+        title: "Design-to-Code Accuracy",
+        body: "Translated Figma screens into pixel-precise, responsive components with production consistency.",
+      },
+    ],
+    challenges:
+      "A key challenge was preserving visual fidelity from design while keeping complex SaaS dashboards maintainable. I solved this by building a reusable component architecture, enforcing consistent spacing and state patterns, and validating responsiveness across breakpoints.",
+    technologies: [
+      {
+        title: "Frontend",
+        body: "Next.js, Tailwind CSS, TypeScript",
+      },
+      {
+        title: "Backend & Data",
+        body: "Node.js, MongoDB",
       },
     ],
   },
