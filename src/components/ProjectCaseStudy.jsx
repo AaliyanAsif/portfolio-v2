@@ -1,125 +1,137 @@
+import { ArrowUpRight, Github, Globe, Layers3 } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { PROJECTS_CASE_STUDY_DATA } from "../data/projects";
 import ScrollToTop from "./ScrollToTop";
 
 const ProjectCaseStudy = () => {
   const { pathname } = useLocation();
-
-  console.log(pathname);
-
-  const currentProject = PROJECTS_CASE_STUDY_DATA.filter((project) =>
+  const currentProject = PROJECTS_CASE_STUDY_DATA.find((project) =>
     pathname.includes(project.id)
-  ).at(0);
-  console.log(currentProject);
+  );
+
+  if (!currentProject) {
+    return (
+      <div className="section-shell min-h-screen pt-32">
+        <div className="section-inner">
+          <div className="premium-card text-center">
+            <h1 className="text-3xl font-semibold text-white">Project not found</h1>
+            <p className="mt-4 text-slate-300">
+              The requested case study could not be located.
+            </p>
+            <a href="/#projects" className="btn-primary mt-8 inline-flex">
+              Back to Projects
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className=" min-h-screen bg-neutral-900 mt-[90px]">
+    <div className="section-shell min-h-screen pt-28 pb-24 lg:pt-32 lg:pb-32">
       <ScrollToTop />
-      {/* <img src="code.svg" /> */}
-      <div className="flex flex-col gap-8 p-10 ">
-        <h1 className="my-10 text-4xl font-semibold text-center text-slate-300 ">
-          {currentProject.title}
-        </h1>
+      <div className="section-inner">
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+          <section className="premium-card">
+            <span className="eyebrow">Case Study</span>
+            <h1 className="mt-6 text-4xl font-semibold text-white sm:text-5xl">
+              {currentProject.title}
+            </h1>
+            <p className="mt-6 text-lg leading-8 text-slate-300">
+              {currentProject.overview}
+            </p>
 
-        <div className="flex justify-between text-2xl font-bold text-slate-300 ">
-          {currentProject.link && (
-            <a
-              href={currentProject.link}
-              target="_blank"
-              className="cursor-pointer hover:text-indigo-600"
-            >
-              Live Site
-            </a>
-          )}
-          {currentProject.github && (
-            <a
-              target="_blank"
-              href={currentProject.github}
-              className="cursor-pointer hover:text-indigo-600"
-            >
-              GitHub Repository
-            </a>
-          )}
+            <div className="mt-8 flex flex-wrap gap-3">
+              {currentProject.link && (
+                <a
+                  href={currentProject.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-primary"
+                >
+                  <Globe className="h-4 w-4" />
+                  Live Site
+                </a>
+              )}
+              {currentProject.github && (
+                <a
+                  href={currentProject.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-secondary"
+                >
+                  <Github className="h-4 w-4" />
+                  Repository
+                </a>
+              )}
+            </div>
+
+            <div className="mt-10 overflow-hidden rounded-[28px] border border-white/8 bg-slate-950/40">
+              <img
+                src={currentProject.img}
+                alt={currentProject.title}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </section>
+
+          <aside className="grid gap-6">
+            <div className="glass-panel px-6 py-6">
+              <p className="soft-label">My Role</p>
+              <p className="mt-3 text-base leading-8 text-slate-300">
+                {currentProject.myRole}
+              </p>
+            </div>
+            <div className="glass-panel px-6 py-6">
+              <p className="soft-label">Build Focus</p>
+              <p className="mt-3 text-base leading-8 text-slate-300">
+                Product thinking, reusable UI structure, and practical full-stack implementation.
+              </p>
+            </div>
+          </aside>
         </div>
 
-        {/* <RollingGallery autoplay pauseOnHover /> */}
+        <div className="mt-8 grid gap-6 lg:grid-cols-2">
+          <section className="card-hover">
+            <div className="flex items-center gap-3">
+              <Layers3 className="h-5 w-5 text-sky-300" />
+              <h2 className="text-2xl font-semibold text-white">Key Features</h2>
+            </div>
+            <div className="mt-6 grid gap-3">
+              {currentProject.keyFeatures.map((feature) => (
+                <div
+                  key={feature.title}
+                  className="rounded-2xl border border-white/8 bg-white/5 px-4 py-4"
+                >
+                  <p className="text-base font-semibold text-white">{feature.title}</p>
+                  <p className="mt-2 text-sm leading-7 text-slate-300">{feature.body}</p>
+                </div>
+              ))}
+            </div>
+          </section>
 
-        <div className="flex justify-center">
-          <img
-            src={currentProject.img}
-            alt="Project Image"
-            className="w-1/2 "
-          />
+          <section className="card-hover">
+            <h2 className="text-2xl font-semibold text-white">Challenges & Solutions</h2>
+            <p className="mt-6 text-base leading-8 text-slate-300">
+              {currentProject.challenges}
+            </p>
+          </section>
         </div>
 
-        <div className="space-y-2">
-          <h3 className="text-3xl font-semibold text-slate-300">Overview</h3>
-          <p className="text-base text-white">{currentProject.overview}</p>
-        </div>
-
-        <div className="space-y-2">
-          <h3 className="text-3xl font-semibold text-slate-300">My Role</h3>
-          <p className="text-base text-white">{currentProject.myRole}</p>
-        </div>
-
-        <div className="space-y-2">
-          <h2 className="text-3xl font-semibold text-slate-300">
-            Key Features
-          </h2>
-          <ul className="space-y-2 text-base text-white list-disc list-inside">
-            {currentProject.keyFeatures.map((feat) => {
-              return (
-                <li key={feat.title}>
-                  <span className="font-medium">{feat.title}s</span> –{" "}
-                  {feat.body}
-                </li>
-              );
-            })}
-            {/* <li>
-              <span className="font-medium">Stock Management</span> – Real-time
-              stock tracking for efficient inventory control.
-            </li>
-            <li>
-              <span className="font-medium">Expense Module</span> – Fully
-              customizable expense tracking with categories, filtering, and
-              summaries.
-            </li>
-            <li>
-              <span className="font-medium">Search & Filtering</span> – Advanced
-              search functionality for sales, expenses, and stock records.
-            </li> */}
-          </ul>
-        </div>
-
-        <div className="space-y-2">
-          <h3 className="text-3xl font-semibold text-slate-300">
-            Challenges & Solutions
-          </h3>
-          <p className="text-base text-white">{currentProject.challenges}</p>
-        </div>
-
-        <div className="space-y-2">
-          <h2 className="text-3xl font-semibold text-slate-300">
-            Technologies Used
-          </h2>
-          <ul className="space-y-2 text-base text-white list-disc list-inside">
-            {currentProject.technologies.map((tech) => {
-              return (
-                <li key={tech.title}>
-                  <span className="font-medium">{tech.title}:</span> {tech.body}
-                </li>
-              );
-            })}
-            {/* <li>
-              <span className="font-medium">Backend:</span> Node.js, Express,
-              MongoDB, Mongoose
-            </li>
-            <li>
-              <span className="font-medium">Other:</span> React Hook Form, MUI
-              Select, Middleware-based architecture
-            </li> */}
-          </ul>
-        </div>
+        <section className="mt-6 card-hover">
+          <h2 className="text-2xl font-semibold text-white">Technologies Used</h2>
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
+            {currentProject.technologies.map((tech) => (
+              <div key={tech.title} className="glass-panel px-5 py-5">
+                <div className="flex items-center gap-2 text-white">
+                  <ArrowUpRight className="h-4 w-4 text-amber-300" />
+                  <p className="font-semibold">{tech.title}</p>
+                </div>
+                <p className="mt-3 text-sm leading-7 text-slate-300">{tech.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   );

@@ -20,6 +20,7 @@ export const PROJECTS_CASE_STUDY_DATA = [
   {
     id: "yadea-pos",
     title: "YADEA POS – A Scalable Point-of-Sale System",
+    link: "https://yadea-demo.vercel.app/",
     img: "/yadea.jpg",
     overview:
       "YADEA POS is a point-of-sale system tailored for bike showrooms. It enables users to handle sales (including installment plans), manage stock levels, and track expenses with custom filtering options. The system was built from scratch as a solo MERN stack project and served as a learning experience for both frontend and backend development.",
@@ -123,7 +124,6 @@ export const PROJECTS_CASE_STUDY_DATA = [
     id: "nike-landing-page",
     title: "A Modren Nike Landing Page ",
     link: "https://aaliyanasif.github.io/NIke-Landing-Page/",
-    github: "https://github.com/AaliyanAsif/NIke-Landing-Page",
     img: "/nike-landing-page.png",
     overview:
       "This was a personal learning project where I created a responsive Nike-themed landing page to sharpen my frontend skills. The page features sleek design, smooth UI interactions, and a clean layout—replicating a professional brand experience. This project was my introduction to using Tailwind CSS, and I also practiced managing state using Redux.",

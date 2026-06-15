@@ -1,75 +1,104 @@
-// import GlitchText from "./Text/GlitchText";
-import ScrollFloat from "./Text/ScrollFloat";
-import ScrollReveal from "./Text/ScrollReveal";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { Sparkles } from "lucide-react";
+
+const stats = [
+  { value: 50, suffix: "+", label: "Completed Projects" },
+  { value: 100, suffix: "%", label: "Client Satisfaction" },
+  { value: 4, suffix: "+", label: "Years Experience" },
+];
+
+function useCountUp(target, active) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!active) {
+      return undefined;
+    }
+
+    const duration = 1200;
+    const frameDuration = 1000 / 60;
+    const totalFrames = Math.round(duration / frameDuration);
+    let frame = 0;
+
+    const timer = window.setInterval(() => {
+      frame += 1;
+      const progress = Math.min(frame / totalFrames, 1);
+      const nextValue = Math.round(target * progress);
+      setCount(nextValue);
+
+      if (progress >= 1) {
+        window.clearInterval(timer);
+      }
+    }, frameDuration);
+
+    return () => window.clearInterval(timer);
+  }, [active, target]);
+
+  return count;
+}
+
+const StatCard = ({ stat, active, delay }) => {
+  const count = useCountUp(stat.value, active);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 22 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.35 }}
+      transition={{ duration: 0.6, delay }}
+      className="about-v2__stat-card"
+    >
+      <div className="about-v2__stat-value">
+        <span>{count}</span>
+        <span className="about-v2__stat-suffix">{stat.suffix}</span>
+      </div>
+      <p className="about-v2__stat-label">{stat.label}</p>
+    </motion.div>
+  );
+};
 
 const About = () => {
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { amount: 0.35, once: true });
+
   return (
-    <div
-      id="about"
-      className=" p-8 md:min-h-[calc(100vh-96px)] bg-neutral-800 scroll-mt-[96px] "
-    >
-      {/* <GlitchText enableOnHover={false } className="text-5xl">
-        About Me
-      </GlitchText> */}
-      <ScrollFloat
-        containerClassName="text-center"
-        // stagger={6}
-        // animationDuration={5}
-        scrollEnd="bottom bottom-=60%"
-        textClassName="mb-8 text-2xl font-semibold  xs:text-3xl md:text-5xl text-[#6c63ff] lg:text-7xl"
-      >
-        About Me
-      </ScrollFloat>
+    <section id="about" ref={sectionRef} className="about-v2 section-shell py-24 lg:py-32">
+      <div className="about-v2__glow about-v2__glow--one" aria-hidden="true" />
+      <div className="about-v2__glow about-v2__glow--two" aria-hidden="true" />
 
-      <div className="grid items-center grid-cols-1 gap-4 text-center xl:text-left xl:grid-cols-2 justify-items-center ">
-        <div className="order-2 lg:order-1 ">
-          <ScrollReveal
-            baseOpacity={0}
-            baseRotation={7}
-            blurStrength={7}
-            textClassName="text-slate-300 xs:text-sm sm:text-lg lg:text-2xl xl:text-3xl"
-          >
-            I’m all about building cool stuff, solving problems💡, and writing
-            clean, efficient code 💻, blending clean UI with powerful backend
-            logic. From dynamic web apps to sleek landing pages, I love making
-            things work seamlessly. Always learning, always building—let’s
-            connect! 🚀
-          </ScrollReveal>
-        </div>
-
-        {/* <div id="illustration" className="flex justify-center animate-[float_4s_ease-in-out_infinite] opacity-0 translate-y-5 transition-all duration-1000 ease-in-ou ">
-          <img src="/code.svg" className="w-1/2" />
-        </div> */}
-
+      <div className="section-inner about-v2__inner">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          className="about-v2__content-panel"
+          initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 5, ease: "easeOut" }}
-          viewport={{ once: true }}
-          className="flex justify-center order-1 lg:order-2"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         >
-          <motion.img
-            src="/code.svg"
-            alt="Coding Illustration"
-            className="w-full md:w-3/4 xl:w-full"
-            animate={{
-              y: [0, -5, 0], // Floating effect
-            }}
-            transition={{
-              duration: 4,
-              ease: "easeInOut",
-              repeat: Infinity, // Loop animation
-            }}
-          />
-        </motion.div>
+          <span className="about-v2__eyebrow">Profile</span>
+          <h2 className="about-v2__title">
+            About Me
+          </h2>
+          <p className="about-v2__description">
+            I build scalable digital products by transforming ideas into reliable, user-focused applications.
+With experience across eCommerce, HRMS, POS, and healthcare platforms, I create solutions that deliver real business value through clean code, modern technologies, and strong engineering practices.
 
-        {/* <img src="/code2.svg" /> */}
-        {/* <img src="/code3.svg" /> */}
-        {/* <img src="/code4.svg" /> */}
-        {/* <img src="/code.svg" /> */}
+          </p>
+
+          <div className="about-v2__stats-grid">
+              {stats.map((stat, index) => (
+                <StatCard key={stat.label} stat={stat} active={isInView} delay={0.15 + index * 0.08} />
+              ))}
+
+          </div>
+
+          <div className="about-v2__note">
+            <Sparkles size={16} />
+            <span>Modern, maintainable, and built for premium product experiences.</span>
+          </div>
+        </motion.div>
       </div>
-    </div>
+    </section>
   );
 };
 

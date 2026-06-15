@@ -1,197 +1,130 @@
-import { useState } from "react";
-import InfiniteScroll from "./InfiniteScroll";
-import BlurText from "./Text/BlurText";
-// import SplitText from "./Text/SplitText";
+import { motion } from "framer-motion";
+import { useRef } from "react";
+import { Code2, Database, Cloud, Zap } from "lucide-react";
 
-const items = [
+const skillCategories = [
   {
-    content: (
-      <div className="flex items-center gap-4 ">
-        <p className="text-white ">HTML 5</p>
-        <img src="/html.svg" width={50} height={50} />
-      </div>
-    ),
+    id: "frontend",
+    title: "Frontend Development",
+    icon: Code2,
+    skills: [
+      "React.js",
+      "Next.js",
+      "JavaScript (ES6+)",
+      "TypeScript",
+      "HTML5",
+      "CSS3",
+      "Tailwind CSS",
+      "Redux",
+    ],
   },
   {
-    content: (
-      <div className="flex items-center gap-4 ">
-        <p className="text-white ">CSS</p>
-        <img src="/css.svg" width={50} height={50} />
-      </div>
-    ),
+    id: "backend",
+    title: "Backend Development",
+    icon: Zap,
+    skills: [
+      "Node.js",
+      "Express.js",
+      "REST APIs",
+      "GraphQL",
+      "Authentication Systems",
+      "Backend Architecture",
+    ],
   },
   {
-    content: (
-      <div className="flex items-center gap-4 ">
-        <p className="text-white ">Javascript</p>
-        <img src="/js.svg" width={50} height={50} />
-      </div>
-    ),
+    id: "database",
+    title: "Database & Storage",
+    icon: Database,
+    skills: ["MongoDB", "PostgreSQL", "MySQL", "Redis", "AWS S3"],
   },
   {
-    content: (
-      <div className="flex items-center gap-4 ">
-        <p className="text-white">React</p>
-        <img src="/react.svg" width={50} height={50} />
-      </div>
-    ),
-  },
-  {
-    content: (
-      <div className="flex items-center gap-4 ">
-        <p className="text-white ">Next JS</p>
-        <img src="/nextjs-icon.svg" width={50} height={50} />
-      </div>
-    ),
-  },
-
-  {
-    content: (
-      <div className="flex items-center gap-4 ">
-        <p className="text-white">Typescript</p>
-        <img src="/typescript.svg" width={50} height={50} />
-      </div>
-    ),
-  },
-
-  {
-    content: (
-      <div className="flex items-center gap-4 ">
-        <p className="text-white ">Tailwind</p>
-        <img src="/tailwind.svg" width={50} height={50} />
-      </div>
-    ),
-  },
-
-  {
-    content: (
-      <div className="flex items-center gap-4 ">
-        <p className="text-white">MUI</p>
-        <img src="/material-ui.svg" width={50} height={50} />
-      </div>
-    ),
-  },
-  {
-    content: (
-      <div className="flex items-center gap-4 ">
-        <p className="text-white">React Query</p>
-        <img src="/react-query.svg" width={50} height={50} />
-      </div>
-    ),
-  },
-  {
-    content: (
-      <div className="flex items-center gap-4 ">
-        <p className="text-white">Redux Toolkit</p>
-        <img src="/redux.svg" width={50} height={50} />
-      </div>
-    ),
-  },
-  {
-    content: (
-      <div className="flex items-center gap-4 ">
-        <p className="text-white">React Hook Form</p>
-        <img src="/rhf.svg" width={50} height={50} />
-      </div>
-    ),
-  },
-  {
-    content: (
-      <div className="flex items-center gap-4 ">
-        <p className="text-white">Socket IO</p>
-        <img src="/socket-io.svg" width={50} height={50} />
-      </div>
-    ),
-  },
-
-  {
-    content: (
-      <div className="flex items-center gap-4 ">
-        <p className="text-white">Node JS</p>
-        <img src="/nodejs.svg" width={50} height={50} />
-      </div>
-    ),
-  },
-  {
-    content: (
-      <div className="flex items-center gap-4 ">
-        <p className="text-white">Express JS</p>
-        <img src="/express.svg" width={50} height={50} />
-      </div>
-    ),
-  },
-  {
-    content: (
-      <div className="flex items-center gap-4 ">
-        <p className="text-white">MongoDB</p>
-        <img src="/mongodb.svg" width={50} height={50} />
-      </div>
-    ),
-  },
-  {
-    content: (
-      <div className="flex items-center gap-4 ">
-        <p className="text-white">Git and Version Control</p>
-        <img src="/git.svg" width={50} height={50} />
-      </div>
-    ),
+    id: "devops",
+    title: "Cloud & DevOps",
+    icon: Cloud,
+    skills: [
+      "AWS Amplify",
+      "AWS Lambda",
+      "AWS Step Functions",
+      "AWS SQS",
+      "Docker",
+      "Git/GitHub",
+    ],
   },
 ];
 
-const Skills = () => {
-  const [isAnimationComplete, setIsAnimationComplete] = useState(false);
+const SkillCard = ({ category, index }) => {
+  const Icon = category.icon;
 
-  const handleAnimationComplete = () => {
-    // Add a small delay after text animation to ensure it settles
-    setTimeout(() => {
-      setIsAnimationComplete(true);
-    }, 200); // 500ms delay after text animation; adjust as needed
-  };
   return (
-    <div
-      id="skills"
-      className="h-[calc(100vh-96px)] p-4 md:p-8 bg-neutral-900 scroll-mt-[96px] "
+    <motion.div
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      whileHover={{ y: -6 }}
+      className="skills-v2__category-card"
     >
-      <div className="flex flex-col items-center justify-center mb-12 text-center ">
-        <BlurText
-          text="My Versatile Toolkit"
-          delay={0}
-          animateBy="words"
-          direction="top"
-          //   onAnimationComplete={handleAnimationComplete}
-          className="mb-8 text-2xl font-semibold text-white capitalize xs:text-3xl md:text-4xl lg:text-5xl "
-        />
-        <BlurText
-          text="Crafting Solutions with Every Tool I Master"
-          delay={30}
-          animateBy="letters"
-          direction="top"
-          onAnimationComplete={handleAnimationComplete}
-          className="mb-8 text-xs font-semibold capitalize xs:text-sm md:text-lg lg:text-xl text-slate-300 "
-        />
+      <div className="skills-v2__category-header">
+        <div className="skills-v2__category-icon">
+          <Icon size={24} />
+        </div>
+        <h3 className="skills-v2__category-title">{category.title}</h3>
       </div>
 
-      <div
-        className={`transition-opacity h-[70%] duration-[2000ms] ease-out ${
-          isAnimationComplete ? "opacity-100" : "opacity-0"
-        }`}
-        style={{ opacity: isAnimationComplete ? 1 : 0 }} // Ensure initial state
-      >
-        <InfiniteScroll
-          items={items}
-          isTilted={true}
-          tiltDirection="left"
-          autoplay={isAnimationComplete ? true : false}
-          autoplaySpeed={0.9}
-          autoplayDirection="up"
-          pauseOnHover={true}
-          itemMinHeight={100}
-          maxHeight="100%"
-          width="40%"
-          negativeMargin="-2rem"
-        />
+      <div className="skills-v2__skills-list">
+        {category.skills.map((skill, skillIndex) => (
+          <motion.div
+            key={skill}
+            initial={{ opacity: 0, x: -12 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.4, delay: index * 0.1 + skillIndex * 0.05 }}
+            className="skills-v2__skill-badge"
+          >
+            <span className="skills-v2__skill-dot" />
+            <span className="skills-v2__skill-name">{skill}</span>
+          </motion.div>
+        ))}
       </div>
-    </div>
+    </motion.div>
+  );
+};
+
+const Skills = () => {
+  const sectionRef = useRef(null);
+
+  return (
+    <section
+      id="skills"
+      ref={sectionRef}
+      className="skills-v2 section-shell py-24 lg:py-32"
+    >
+      <div className="skills-v2__glow skills-v2__glow--one" aria-hidden="true" />
+      <div className="skills-v2__glow skills-v2__glow--two" aria-hidden="true" />
+
+      <div className="section-inner skills-v2__inner">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6 }}
+          className="skills-v2__header"
+        >
+          <span className="skills-v2__eyebrow">Technical Skills</span>
+          <h2 className="skills-v2__title">Technical Expertise</h2>
+          <p className="skills-v2__subtitle">
+            Technologies and tools I use to build scalable, modern applications with
+            clean architecture and high performance.
+          </p>
+        </motion.div>
+
+        <div className="skills-v2__grid">
+          {skillCategories.map((category, index) => (
+            <SkillCard key={category.id} category={category} index={index} />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 
