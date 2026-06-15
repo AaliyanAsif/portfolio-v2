@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowUpRight, Github, Globe, Linkedin, Mail, MapPin } from "lucide-react";
+import { ArrowUpRight, Github, Globe, Linkedin, Mail, Phone } from "lucide-react";
 
 const contactCards = [
   {
@@ -8,6 +8,13 @@ const contactCards = [
     title: "aaliyanasif@outlook.com",
     detail: "Best for project inquiries and collaboration discussions.",
     href: "mailto:aaliyanasif@outlook.com",
+  },
+  {
+    icon: Phone,
+    label: "Phone Number",
+    title: "+92 31 7610355",
+    detail: "Call for direct project discussions and follow-up.",
+    href: "tel:+92317610355",
   },
   {
     icon: Linkedin,
@@ -25,13 +32,7 @@ const contactCards = [
     href: "https://github.com/AaliyanAsif",
     external: true,
   },
-  {
-    icon: MapPin,
-    label: "Availability",
-    title: "Remote & Freelance",
-    detail: "Available for freelance and remote opportunities.",
-    href: "mailto:aaliyanasif@outlook.com?subject=Availability%20Inquiry",
-  },
+  
 ];
 
 const ContactCard = ({ card, index }) => {
