@@ -55,8 +55,10 @@ const Hero = () => {
               <ArrowUpRight size={16} />
             </motion.a>
             <motion.a
-              href="#"
+              href="https://drive.google.com/file/d/1rEm5-uG8wJxUvBLthrC3CZFltRaZN36c/view?usp=sharing"
               className="hero-v2__button hero-v2__button--secondary"
+              target="_blank"
+              rel="noopener noreferrer"
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -78,7 +80,7 @@ const Hero = () => {
 
             <div className="hero-v2__frame" aria-hidden="true" />
             <div className="hero-v2__photo-shell">
-              <img src="/me2.png" alt="Aaliyan Asif portrait" className="hero-v2__photo" />
+              <img src="/finalme.png" alt="Aaliyan Asif portrait" className="hero-v2__photo" />
             </div>
 
             {floaters.map((floater, index) => (
