@@ -10,8 +10,8 @@ function App() {
     <div className="site-shell">
       <Hero />
       <About />
-      <Skills />
       <Projects />
+      <Skills />
       <Services />
       <Contact />
     </div>
