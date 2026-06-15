@@ -1,103 +1,202 @@
-import { useState } from "react";
-import ShinyText from "./Text/ShinnyText";
-
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, ArrowUpRight } from "lucide-react";
 import { HashLink as Link } from "react-router-hash-link";
+
+const navigationItems = [
+  { name: "Home", link: "#home" },
+  { name: "About", link: "#about" },
+  { name: "Skills", link: "#skills" },
+  { name: "Projects", link: "#projects" },
+  { name: "Services", link: "#services" },
+  { name: "Contact", link: "#contact" },
+];
+
+const NavLink = ({ item, index, isActive, isScrolled }) => (
+  <motion.div
+    initial={{ opacity: 0, y: -8 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.4, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+  >
+    <Link
+      smooth
+      to={item.link}
+      className="navbar-v2__link"
+      style={{
+        color: isActive ? "#ff8a61" : isScrolled ? "#ffffff" : "#e0e6f1",
+      }}
+    >
+      <span>{item.name}</span>
+      {isActive && (
+        <motion.div
+          className="navbar-v2__link-underline"
+          layoutId="navbar-underline"
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        />
+      )}
+    </Link>
+  </motion.div>
+);
+
+const MobileNavLink = ({ item, index, isActive, onClose }) => (
+  <motion.div
+    initial={{ opacity: 0, x: -16 }}
+    animate={{ opacity: 1, x: 0 }}
+    exit={{ opacity: 0, x: -16 }}
+    transition={{ duration: 0.3, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+  >
+    <Link
+      smooth
+      to={item.link}
+      onClick={onClose}
+      className={`navbar-v2__mobile-link ${isActive ? "active" : ""}`}
+    >
+      {item.name}
+      {isActive && <span className="navbar-v2__mobile-link-dot" />}
+    </Link>
+  </motion.div>
+);
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = window.scrollY > 50;
+      setIsScrolled(scrolled);
 
-  const navbarLinks = [
-    {
-      name: "Home",
-      link: "#home",
-    },
-    {
-      name: "About",
-      link: "#about",
-    },
-    {
-      name: "Skills",
-      link: "#skills",
-    },
-    {
-      name: "Projects",
-      link: "#projects",
-    },
-    {
-      name: "Contact",
-      link: "#contact",
-    },
-  ];
+      const sections = navigationItems.map((item) => item.link.replace("#", ""));
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav className="fixed top-0 z-20 w-full border-b border-gray-700 bg-neutral-950 text-slate-300 hover:text-white start-0 ">
-      <div className="flex flex-wrap items-center justify-between w-full p-4">
-        {/* Logo Section */}
-        <ShinyText
-          text="Aaliyan Asif"
-          disabled={false}
-          speed={3}
-          className="p-4 font-mono text-2xl font-semibold lg:text-4xl"
-        />
-
-        {/* Right Section */}
-        <div className="flex space-x-3 sm:space-x-0 rtl:space-x-reverse md:hidden">
-          <button
-            onClick={toggleMenu}
-            type="button"
-            className="inline-flex items-center justify-center w-10 h-10 p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            aria-controls="navbar-sticky"
-            aria-expanded={isOpen}
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="w-5 h-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
-          </button>
-        </div>
-
-        {/* Navigation Links */}
-        <div
-          className={`items-center mr-8 justify-between ${
-            isOpen ? "block" : "hidden"
-          } w-full md:flex md:w-auto md:order-1`}
-          id="navbar-sticky"
+    <motion.nav
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className={`navbar-v2 ${isScrolled ? "navbar-v2--scrolled" : ""}`}
+    >
+      <div className="navbar-v2__inner">
+        <motion.div
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="navbar-v2__logo"
         >
-          <ul className="flex flex-col p-4 mt-4 font-medium border border-gray-100 rounded-lg md:p-0 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 ">
-            {navbarLinks.map((item) => (
-              <li key={item}>
-                <Link
-                  smooth
-                  to={`/${item.link}`}
-                  className={`block py-2 px-3 rounded-sm text-slate-300 text-2xl lg:text-3xl font-mono ${
-                    item.name === "Home"
-                      ? "  md:bg-transparent md:text-slate-300 md:dark:text-slate-300"
-                      : "text-slate-300 hover:bg-white md:hover:bg-transparent md:hover:text-white dark:text-slate-300  dark:hover:text-white"
-                  } md:p-0 md:dark:hover:text-white dark:border-gray-700`}
-                >
-                  {item.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <Link smooth to="#home" className="navbar-v2__logo-link">
+            <span className="navbar-v2__logo-icon">AA</span>
+            <div>
+              <span className="navbar-v2__logo-name">Aaliyan Asif</span>
+              <span className="navbar-v2__logo-title">Full-Stack Developer</span>
+            </div>
+          </Link>
+        </motion.div>
+
+        <div className="navbar-v2__desktop-menu">
+          {navigationItems.map((item, index) => (
+            <NavLink
+              key={item.name}
+              item={item}
+              index={index}
+              isActive={activeSection === item.link.replace("#", "")}
+              isScrolled={isScrolled}
+            />
+          ))}
         </div>
+
+        <motion.a
+          href="#contact"
+          whileHover={{ y: -2 }}
+          whileTap={{ scale: 0.95 }}
+          className="navbar-v2__cta"
+        >
+          <span>Let&apos;s Talk</span>
+          <ArrowUpRight size={16} />
+        </motion.a>
+
+        <motion.button
+          type="button"
+          onClick={() => setIsOpen((value) => !value)}
+          className="navbar-v2__mobile-toggle"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          aria-expanded={isOpen}
+          aria-label="Toggle navigation menu"
+        >
+          <AnimatePresence mode="wait">
+            {isOpen ? (
+              <motion.div
+                key="close"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <X className="h-5 w-5" />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="menu"
+                initial={{ rotate: 90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: -90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Menu className="h-5 w-5" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.button>
       </div>
-    </nav>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="navbar-v2__mobile-menu"
+          >
+            <div className="navbar-v2__mobile-links">
+              {navigationItems.map((item, index) => (
+                <MobileNavLink
+                  key={item.name}
+                  item={item}
+                  index={index}
+                  isActive={activeSection === item.link.replace("#", "")}
+                  onClose={() => setIsOpen(false)}
+                />
+              ))}
+            </div>
+            <motion.a
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.3 }}
+              href="#contact"
+              onClick={() => setIsOpen(false)}
+              className="navbar-v2__mobile-cta"
+            >
+              Let&apos;s Talk
+              <ArrowUpRight size={16} />
+            </motion.a>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.nav>
   );
 }

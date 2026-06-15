@@ -101,6 +101,11 @@ const Particles = ({
 
     const renderer = new Renderer({ depth: false, alpha: true });
     const gl = renderer.gl;
+    gl.canvas.style.position = "absolute";
+    gl.canvas.style.inset = "0";
+    gl.canvas.style.width = "100%";
+    gl.canvas.style.height = "100%";
+    gl.canvas.style.pointerEvents = "none";
     container.appendChild(gl.canvas);
     gl.clearColor(0, 0, 0, 0);
 
@@ -233,7 +238,7 @@ const Particles = ({
 
   return (
     <div ref={containerRef} className={`relative w-full h-full ${className}`}>
-      <div className="absolute top-0 left-0 w-full h-full ">{children}</div>
+      <div className="relative z-10 w-full h-full">{children}</div>
     </div>
   );
 };
